@@ -15,3 +15,7 @@
 #reader__scan_region {
   min-height: 50vh;
 }
+
+#reader__dashboard {
+  max-height: 20vh;
+}
