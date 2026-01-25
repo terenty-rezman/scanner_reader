@@ -16,6 +16,7 @@
   <body>
     <div class="app">
       <div id="reader"></div>
+      <div id="ratio"></div>
     </div>
   </body>
 
@@ -48,6 +49,8 @@
       rememberLastUsedCamera: true,
       formatsToSupport: formatsToSupport,
     };
+
+    document.getElementById("ratio").innerHTML = config.aspectRatio;
 
     var html5QrcodeScanner = new Html5QrcodeScanner("reader", config, false);
     html5QrcodeScanner.render(onScanSuccess, onScanError);
