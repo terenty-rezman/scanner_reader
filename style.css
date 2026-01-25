@@ -1,0 +1,14 @@
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: red;
+}
+
+#reader {
+  width: 500px;
+  height: 500px;
+  border: 5px solid green;
+}

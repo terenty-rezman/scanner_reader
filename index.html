@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Scanner reader</title>
+    <!-- Add HTML5 QR code library -->
+    <script src="html5-qrcode.min.js"></script>
+  </head>
+
+  <body>
+    <div class="app">
+      <div style="width: 500px" id="reader"></div>
+    </div>
+  </body>
+
+  <script>
+    function onScanSuccess(decodedText, decodedResult) {
+      // Handle on success condition with the decoded text or result.
+      console.log(`Scan result: ${decodedText}`, decodedResult);
+      html5QrcodeScanner.stop(); // Stop the scanner after a successful scan
+    }
+
+    function onScanError(errorMessage) {
+      // handle on error condition, with error message
+      console.error("Scan error: ", errorMessage);
+    }
+
+    var html5QrcodeScanner = new Html5QrcodeScanner("reader", {
+      fps: 10,
+      qrbox: 250,
+    });
+    html5QrcodeScanner.render(onScanSuccess, onScanError);
+  </script>
+</html>
