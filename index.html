@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <title>Scanner reader</title>
-    <script
+    <!-- <script
       src="https://unpkg.com/html5-qrcode"
       type="text/javascript"
-    ></script>
-    <!-- <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script> -->
+    ></script> -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
   </head>
 
   <body>
@@ -35,17 +35,21 @@
     const html5Qrcode = new Html5Qrcode("reader");
 
     function onScanSuccess(text, result) {
+      count++;
+
       if (
-        !scannedProducts.current.has(decodedText) &&
+        !scannedProducts.current.has(result) &&
         result.format.formatName === "DATA_MATRIX"
       ) {
-        scannedProducts.push(result);
+        scannedProducts.add(result);
+        console.log("Добавлен:", result);
       } else {
         console.log("Дубликат, не добавляем:", result);
       }
 
+      console.log("Count:", count);
       console.log("Scanned:", text);
-      console.log("Array:", scannedProducts);
+      console.log("Set:", scannedProducts);
     }
 
     function onScanError(err) {
