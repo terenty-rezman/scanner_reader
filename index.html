@@ -6,11 +6,11 @@
     <link rel="stylesheet" href="reset.css" />
     <link rel="stylesheet" href="style.css" />
     <title>Scanner reader</title>
-    <!-- <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script> -->
     <script
       src="https://unpkg.com/html5-qrcode"
       type="text/javascript"
     ></script>
+    <!-- <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script> -->
   </head>
 
   <body>
@@ -21,38 +21,52 @@
   </body>
 
   <script>
-    function onScanSuccess(decodedText, decodedResult) {
-      console.log(`Scan result: ${decodedText}`, decodedResult);
-      html5QrcodeScanner.stop();
-    }
+    let scannedProducts = new Set();
+    let count = 0;
 
-    function onScanError(errorMessage) {
-      console.error("Scan error: ", errorMessage);
-    }
-
-    let qrboxFunction = function (viewfinderWidth, viewfinderHeight) {
-      let minEdgePercentage = 0.7; // 70%
-      let minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-      let qrboxSize = Math.floor(minEdgeSize * minEdgePercentage);
-      return {
-        width: qrboxSize,
-        height: qrboxSize,
-      };
-    };
-
-    const formatsToSupport = [Html5QrcodeSupportedFormats.DATA_MATRIX];
-
-    let config = {
-      fps: 10,
-      qrbox: qrboxFunction,
+    const config = {
+      fps: 60,
+      // qrbox: { width: 320, height: 240 },
+      qrbox: { width: 320, height: 280 },
       aspectRatio: window.innerWidth / window.innerHeight,
-      rememberLastUsedCamera: true,
-      formatsToSupport: formatsToSupport,
+      formatsToSupport: [Html5QrcodeSupportedFormats.DATA_MATRIX],
     };
 
-    document.getElementById("ratio").innerHTML = config.aspectRatio;
+    const html5Qrcode = new Html5Qrcode("reader");
 
-    var html5QrcodeScanner = new Html5QrcodeScanner("reader", config, false);
-    html5QrcodeScanner.render(onScanSuccess, onScanError);
+    function onScanSuccess(text, result) {
+      if (
+        !scannedProducts.current.has(decodedText) &&
+        result.format.formatName === "DATA_MATRIX"
+      ) {
+        scannedProducts.push(result);
+      } else {
+        console.log("Дубликат, не добавляем:", result);
+      }
+
+      console.log("Scanned:", text);
+      console.log("Array:", scannedProducts);
+    }
+
+    function onScanError(err) {
+      console.warn("ERROR:", err);
+    }
+
+    Html5Qrcode.getCameras().then((cameras) => {
+      if (!cameras || cameras.length === 0) {
+        console.error("No cameras found");
+        return;
+      }
+      if (!cameras.length) return;
+
+      const cameraId = cameras[0].id;
+
+      html5Qrcode.start(
+        { deviceId: cameraId },
+        config,
+        onScanSuccess,
+        onScanError,
+      );
+    });
   </script>
 </html>
