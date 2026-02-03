@@ -19,6 +19,7 @@
       <div id="ratio">
         <div id="camera-in-use"></div>
         <div id="count_id">Count:</div>
+        <div id="set-size">Set size:</div>
       </div>
     </div>
   </body>
@@ -48,6 +49,8 @@
         scannedProducts.add(result);
         console.log("Добавлен:", result);
         document.getElementById("count_id").textContent = `Count: ${count}`;
+        document.getElementById("set-size").textContent =
+          `Set size: ${scannedProducts.size}`;
       } else {
         console.log("Дубликат, не добавляем:", result);
       }
