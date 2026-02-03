@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="reset.css" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./styles/reset.css" />
+    <link rel="stylesheet" href="./styles/style.css" />
     <title>Scanner reader</title>
     <!-- <script
       src="https://unpkg.com/html5-qrcode"
@@ -38,7 +38,7 @@
       count++;
 
       if (
-        !scannedProducts.current.has(result) &&
+        !scannedProducts.has(result) &&
         result.format.formatName === "DATA_MATRIX"
       ) {
         scannedProducts.add(result);
@@ -49,6 +49,7 @@
 
       console.log("Count:", count);
       console.log("Scanned:", text);
+      console.log("Всего уникальных:", scannedProducts.size);
       console.log("Set:", scannedProducts);
     }
 
