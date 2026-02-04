@@ -6,11 +6,7 @@
     <link rel="stylesheet" href="./styles/reset.css" />
     <link rel="stylesheet" href="./styles/style.css" />
     <title>Scanner reader</title>
-    <!-- <script
-      src="https://unpkg.com/html5-qrcode"
-      type="text/javascript"
-    ></script> -->
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="./lib/html5-qrcode.min.js"></script>
   </head>
 
   <body>
@@ -32,8 +28,9 @@
       fps: 30,
       // qrbox: { width: 320, height: 240 },
       qrbox: { width: 315, height: 240 },
-      // aspectRatio: window.innerWidth / window.innerHeight,
-      aspectRatio: window.innerHeight / window.innerWidth,
+      // qrbox: { width: 425, height: 340 },
+      aspectRatio: window.innerWidth / window.innerHeight,
+      // aspectRatio: window.innerHeight / window.innerWidth,
       rememberLastUsedCamera: true,
       formatsToSupport: [Html5QrcodeSupportedFormats.DATA_MATRIX],
     };
