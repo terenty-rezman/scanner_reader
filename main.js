@@ -61,6 +61,9 @@ window.onload = () => {
       document.getElementById("video_el_h_id").textContent =
         `video_el_height: ${video.clientHeight}`;
     });
+
+    video.style.width = window.innerWidth;
+    video.style.height = window.innerHeight;
   });
 
   observer.observe(document.body, {
