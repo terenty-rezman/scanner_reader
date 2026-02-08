@@ -56,15 +56,18 @@ window.onload = () => {
 
     video.addEventListener("loadedmetadata", () => {
       console.log("Before update:", video.clientWidth, video.clientHeight);
+
       document.getElementById("video_el_w_id").textContent =
         `video_el_width: ${video.clientWidth}`;
       document.getElementById("video_el_h_id").textContent =
         `video_el_height: ${video.clientHeight}`;
 
-      video.style.width = window.innerWidth;
-      video.style.height = window.innerHeight;
+      video.style.width = window.innerWidth + "px";
+      video.style.height = window.innerHeight + "px";
 
-      console.log("After update:", video.clientWidth, video.clientHeight);
+      requestAnimationFrame(() => {
+        console.log("After update:", video.clientWidth, video.clientHeight);
+      });
     });
   });
 
