@@ -46,6 +46,27 @@ initScanner("reader", config);
 window.onload = () => {
   document.getElementById("ratio-size").textContent =
     `Ratio: ${config.aspectRatio}`;
+
+  const observer = new MutationObserver(() => {
+    const video = document.querySelector("video");
+    if (!video) return;
+
+    console.log("video найден", video);
+    observer.disconnect();
+
+    video.addEventListener("loadedmetadata", () => {
+      console.log(video.clientWidth, video.clientHeight);
+      document.getElementById("video_el_w_id").textContent =
+        `video_el_width: ${video.clientWidth}`;
+      document.getElementById("video_el_h_id").textContent =
+        `video_el_height: ${video.clientHeight}`;
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
 };
 
 document.getElementById("rescan-btn").addEventListener("click", () => {
