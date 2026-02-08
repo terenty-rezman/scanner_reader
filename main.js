@@ -17,6 +17,22 @@ const screenResolution = {
   devicePixelRatio: window.devicePixelRatio,
 };
 
+console.log("screenWidth", screenResolution.screenWidth);
+console.log("screenHeight", screenResolution.screenHeight);
+console.log("viewportWidth", screenResolution.viewportWidth);
+console.log("viewportHeight", screenResolution.viewportHeight);
+console.log("devicePixelRatio", screenResolution.devicePixelRatio);
+
+document.getElementById("screenWidth_id").textContent =
+  `screenWidth: ${screenResolution.screenWidth}`;
+document.getElementById("screenHeight_id").textContent =
+  `screenHeight: ${screenResolution.screenHeight}`;
+
+document.getElementById("viewportWidth_id").textContent =
+  `viewportWidth: ${screenResolution.viewportWidth}`;
+document.getElementById("viewportHeight_id").textContent =
+  `viewportHeight: ${screenResolution.viewportHeight}`;
+
 const config = {
   fps: 20,
   qrbox: { width: 320, height: 240 },
