@@ -1,13 +1,21 @@
 import { initScanner, startScanner } from "./modules/scanner.js";
 import { hideModal, showSentModal, hideSentModal } from "./modules/modal.js";
 import { resetState, scannedSet } from "./modules/state.js";
+import { detectBrowser } from "./modules/browser.js";
 
 const TIMEOUT = 3000;
+
+console.log("Браузер:", detectBrowser());
+
+const browser = detectBrowser();
 
 const config = {
   fps: 20,
   qrbox: { width: 320, height: 240 },
-  aspectRatio: window.innerHeight / window.innerWidth,
+  aspectRatio:
+    browser === "Firefox"
+      ? window.innerHeight / window.innerWidth
+      : window.innerWidth / window.innerHeight,
   rememberLastUsedCamera: true,
   formatsToSupport: [Html5QrcodeSupportedFormats.DATA_MATRIX],
 };
