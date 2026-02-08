@@ -62,12 +62,12 @@ window.onload = () => {
       document.getElementById("video_el_h_id").textContent =
         `video_el_height: ${video.clientHeight}`;
 
-      // video.style.width = window.innerWidth + "px";
-      // video.style.height = screen.height + "px";
+      video.style.width = window.innerWidth + "px";
+      video.style.height = screen.height + "px";
 
-      // requestAnimationFrame(() => {
-      //   console.log("After update:", video.clientWidth, video.clientHeight);
-      // });
+      requestAnimationFrame(() => {
+        console.log("After update:", video.clientWidth, video.clientHeight);
+      });
     });
   });
 
