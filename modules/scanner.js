@@ -5,21 +5,59 @@ let html5Qrcode;
 let cameraId;
 let config;
 
-export function initScanner(readerId, scannerConfig) {
+export async function initScanner(readerId, scannerConfig) {
   config = scannerConfig;
   html5Qrcode = new Html5Qrcode(readerId, config);
 
-  Html5Qrcode.getCameras().then((cameras) => {
-    const backCamera =
-      cameras.find((c) => /back|rear|environment/i.test(c.label)) || cameras[0];
+  const cameras = await Html5Qrcode.getCameras();
 
-    cameraId = backCamera.id;
-
-    document.getElementById("camera-in-use").textContent =
-      `Camera: ${backCamera.label || "default"}`;
-
-    startScanner();
+  // 🔍 логируем каждую опцию поиска
+  cameras.forEach((c) => {
+    console.log("Camera obj:", c);
+    console.log(c.label || "Без названия", {
+      back: /back/i.test(c.label),
+      rear: /rear/i.test(c.label),
+      environment: /environment/i.test(c.label),
+    });
   });
+
+  document.getElementById("cameras_id").innerHTML = cameras
+    .map(
+      (c, index) => `
+        <div style="margin-bottom:8px">
+          <div><strong>Camera ${index + 1}</strong></div>
+          <div>id: ${c.id}<div>
+          <div>label: ${c.label || "Без названия"}</div>
+        </div>
+      `,
+    )
+    .join("");
+
+  // 🖥 вывод на экран
+  // document.getElementById("cameras_id").innerHTML = cameras
+  //   .map((c) => {
+  //     const label = c.label || "Без названия";
+  //     return `
+  //       <div style="margin-bottom:8px">
+  //         <div><strong>${label}</strong></div>
+  //         <div>back: ${c} ${/back/i.test(label) ? "✅" : "❌"}</div>
+  //         <div>rear: ${/rear/i.test(label) ? "✅" : "❌"}</div>
+  //         <div>environment: ${/environment/i.test(label) ? "✅" : "❌"}</div>
+  //       </div>
+  //     `;
+  //   })
+  //   .join("");
+
+  // 🎯 выбор back-камеры
+  const backCamera =
+    cameras.find((c) => /back|rear|environment/i.test(c.label)) || cameras[0];
+
+  cameraId = backCamera.id;
+
+  document.getElementById("camera-in-use").textContent =
+    `Camera: ${backCamera.label || "default"}`;
+
+  startScanner();
 }
 
 export function startScanner() {
